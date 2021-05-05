@@ -3,6 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 .vscode/
+SeedData/
 appsettings.json
 *.db
 # User-specific files
