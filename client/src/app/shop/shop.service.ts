@@ -20,7 +20,8 @@ export class ShopService {
     if (typeId) {
       params = params.append('typeId', typeId.toString());
     }
-    return this.http.get<IProduct[]>(this.baseUrl + 'products');
+    //return this.http.get<IProduct[]>(this.baseUrl + 'products');
+    return this.http.get<any>(this.baseUrl + 'products');
     // return this.http.get<IProduct[]>(this.baseUrl + 'products', { observe: 'response', params })
     //   .pipe(
     //     map(response => {
