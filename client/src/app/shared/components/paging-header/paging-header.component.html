@@ -1,0 +1,8 @@
+<header>
+    <span *ngIf="this.totalItems!==0">
+        Showing <strong>{{numFromResult}}-{{numToResults}}</strong> of <strong>{{totalItems}}</strong> Results
+    </span>
+    <span *ngIf="this.totalItems===0">
+        There are <strong>0</strong> results for this filter
+    </span>
+</header>

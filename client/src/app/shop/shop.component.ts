@@ -20,7 +20,8 @@ export class ShopComponent implements OnInit {
     { name: 'Price: Low to High', value: 'priceAsc' },
     { name: 'Price: High to Low', value: 'priceDesc' }
   ]
-  numOfResults = 0;
+  numFromResult = 1;
+  numToResults = 0;
   totalItems = 0;
 
   constructor(private shopService: ShopService) { }
@@ -36,7 +37,8 @@ export class ShopComponent implements OnInit {
       this.products = response.data;
       this.shopParams.pageNumber = response.pageIndex;
       this.shopParams.pageSize = response.pageSize;
-      this.numOfResults = response.data.length;
+      this.numFromResult= (response.pageSize*(response.pageIndex-1))+1;
+      this.numToResults= this.numFromResult+response.data.length-1;
       this.totalItems = response.count;
     }, error => {
       console.log(error);
@@ -72,8 +74,8 @@ export class ShopComponent implements OnInit {
     this.getProducts();
   }
 
-  onPageChanged(event: any) {
-    this.shopParams.pageNumber = event.page;
+  onPageChanged(event: number) {
+    this.shopParams.pageNumber = event;
     this.getProducts();
   }
 }
