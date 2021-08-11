@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Dtos;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +22,27 @@ namespace API.Controllers
             return Ok(basket ?? new CustomerBasket(id));
         }
         [HttpPost]
-        public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasket basket)
+        public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasketDto basket)
         {
-            var updatedBasket = await _basketRepository.UpdateBasketAsync(basket);
+            var customerBasket = new CustomerBasket
+            {
+                Id = basket.Id,
+                Items = new List<BasketItem>()
+            };
+            basket.Items.ForEach(x =>
+            {
+                customerBasket.Items.Add(new BasketItem
+                {
+                    Id=x.Id,
+                    ProductName=x.ProductName,
+                    Price=x.Price,
+                    Quantity=x.Quantity,
+                    PictureUrl=x.PictureUrl,
+                    Brand=x.Brand,
+                    Type=x.Type
+                });
+            });
+            var updatedBasket = await _basketRepository.UpdateBasketAsync(customerBasket);
             return Ok(updatedBasket);
         }
         [HttpDelete]
